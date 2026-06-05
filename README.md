@@ -15,6 +15,8 @@
 
 ---
 
+> 🌐 Languages: **English** · [中文](README.zh-CN.md)
+
 > Replace `liucx147` below with your GitHub organization (or username) before running.
 
 ```bash
