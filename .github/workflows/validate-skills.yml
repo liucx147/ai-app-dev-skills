@@ -1,0 +1,53 @@
+name: validate-skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate SKILL.md (checks a–d)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python (for YAML parsing in validate.sh)
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install pyyaml (required by scripts/validate.sh)
+        run: pip install --quiet pyyaml
+
+      - name: Make scripts executable
+        run: chmod +x scripts/*.sh
+
+      # The five checks from the spec:
+      #   (a) every skills/*/SKILL.md exists              → enforced by validate.sh
+      #   (b) YAML frontmatter parses; name + description → enforced by validate.sh
+      #   (c) name is kebab-case, ≤ 64 chars              → enforced by validate.sh
+      #   (d) description is 150–300 chars                → enforced by validate.sh
+      #       (project convention; see CLAUDE.md)
+      #   (e) Markdown body free of obvious issues        → next step (lint job)
+      - name: Run validator (a–d)
+        run: bash scripts/validate.sh
+
+      - name: Run validator's own smoke tests
+        run: bash scripts/test-validate.sh
+
+  lint-markdown:
+    name: Lint SKILL markdown bodies (check e)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Markdown lint on skills/ only
+        uses: DavidAnson/markdownlint-cli2-action@v16
+        with:
+          globs: |
+            skills/**/*.md
+          continue-on-error: true

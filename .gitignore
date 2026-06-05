@@ -1,0 +1,62 @@
+# OS
+.DS_Store
+Thumbs.db
+._*
+desktop.ini
+
+# Editors / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*.swn
+*~
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.mypy_cache/
+*.egg-info/
+
+# Node
+node_modules/
+dist/
+build/
+.tsbuildinfo
+*.tsbuildinfo
+.next/
+.nuxt/
+
+# Environment / secrets — never commit
+.env
+.env.local
+.env.*.local
+
+# Logs and test outputs
+*.log
+logs/
+coverage/
+.nyc_output/
+
+# Claude Code / agent artifacts
+.claude/
+.mcp.json
+
+# Generated docs
+docs/_build/
+site/
+
+# Unrelated sibling project at workspace root
+claude-code-skills-zh/
